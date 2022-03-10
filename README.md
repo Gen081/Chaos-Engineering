@@ -11,13 +11,28 @@ To address these challenges, organizations are increasingly practicing Chaos Eng
 
 #### What is Chaos Engineering?
 
+Chaos Engineering is the discipline of experimenting on a system in order to build confidence in the system’s capability to withstand turbulent conditions in production.
+
+
+#### Chaos Engineering in Practice
+
+This practive follows 4 steps:
+
+**1-** Start by defining ‘steady state’ as some measurable output of a system that indicates normal behavior.
+
+**2-** Hypothesize that this steady state will continue in both the control group and the experimental group.
+
+**3-** Introduce variables that reflect real world events like servers that crash, hard drives that malfunction, network connections that are severed, etc.
+
+**4-** Try to disprove the hypothesis by looking for a difference in steady state between the control group and the experimental group.
 
 
 
 
 
-Install using native package management
-It is important to install the kubectl using native package management.  Type these commands below:
+
+
+Install kubectl using native package management.  Type these commands below:
 
 
 ![](pics/kubectl-install.png)
