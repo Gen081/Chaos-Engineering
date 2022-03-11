@@ -194,7 +194,7 @@ $ kubectl get pods --kubeconfig ./.kube/config
 ![](pics/litmuschaos-install6.png)
 
 
-To access Litmus ChaosCenter UI, let's use the URL given here
+- To access Litmus ChaosCenter UI, let's use the URL given here
 
 ```http://ac2a5f52b687e41f09400596e6e8db67-1674008896.us-east-1.elb.amazonaws.com:9091```
 
@@ -204,6 +204,28 @@ and sign in using the default username “admin” and password “litmus.”
 
 
 ![](pics/litmuschaos1.png)
+
+
+![](pics/litmuschaos2.png)
+
+
+- Confirm the agent installation by running the command below.
+
+![](pics/litmuschaos3.png)
+
+
+
+- Verify that LitmusChaos CRDs are created:
+
+![](pics/litmuschaos4.png)
+
+
+- Verify that LitmusChaos API resources are created:
+
+![](pics/litmuschaos5.png)
+
+Now, I successfully install LitmusChaos on the EKS cluster. 
+
 
 
 
