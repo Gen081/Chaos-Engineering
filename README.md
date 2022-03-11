@@ -228,9 +228,27 @@ Now, I successfully install LitmusChaos on the EKS cluster.
 
 
 
+### Step 3: Install demo application
+
+Let’s deploy nginx on the cluster using the manifest below to run the chaos experiments on it. Save the manifest as nginx.yaml and apply it.
+
+- Create a file on your PC and name it nginx.yaml. Command to create that nginx.yaml is this :
+
+ ```cat <<EOF> nginx.yaml```
+
+Then edit **nginx.yaml** with the below code
+
+![](pics/demo-app-install.png)
 
 
+- Install the demo app by running the below command on your terminal 
 
+![](pics/demo-app-install1.png)
+
+
+- Verify if the nginx pod is running by executing the command below.
+
+![](pics/demo-app-install2.png)
 
 
 
