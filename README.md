@@ -46,43 +46,92 @@ For this project, I will create an Amazon EKS cluster with managed nodes. I’ll
 The followings are needed to complete the project:
 
 - [AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+
+Since I already installed the AWS CLI version 2 on my terminal from a previous project.  I simply check its version:
+
+![](pics/aws-version.png)
+
+
 - [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+
+![](pics/eksctl.png)
+
 - [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
-- [Helm](https://www.eksworkshop.com/beginner/060_helm/helm_intro/install/index.html)
 
-
-
-
-
-### Step 1: Create EKS cluster
-
-
-
-
-
-
-Install kubectl using native package management.  Type these commands below:
-
+To install kubectl using native package management.  Type these commands below:
 
 ![](pics/kubectl-install.png)
 
 ![](pics/kubectl-install1.png)
 
-
-
-Install Helm
+- [Helm](https://www.eksworkshop.com/beginner/060_helm/helm_intro/install/index.html)
 
 ![](pics/helm-install.png)
 
+### Step 1: Create EKS cluster
+
+Steps to create a new EKS cluster
+
+- Open your terminal and run these commands on it.
+
+![](pics/eks-cluster.png)
+
+After running these commands on the terminal, navigate to AWS console and search for Amazon Elastic Kubernetes Service (EKS)
+
+![](pics/aws-eks-search.png)
+
+The cluster created on the terminal should appear as such:
+
+![](pics/eks-litmus-demo.png)
+
+When click on the cluster **eks-litmus-demo**, 2 nodes must show. If for any reason, there is no Node in there, need to add Nodes manually.
+
+this link below will demonstrate how to manually Add Worker Nodes To Amazon EKS Cluster:
+
+[How to add Nodes to EKS Cluster](https://ostechnix.com/add-worker-nodes-to-amazon-eks-cluster/)
+
+
+These screenshots below will demostrate the steps of what I did to add the Worker Node to the EKS cluster
+
+![](pics/worker-node.png)
+
+![](pics/worker-node1.png)
+
+
+![](pics/worker-node2.png)
+
+
+![](pics/worker-node3.png)
+
+
+![](pics/worker-node4.png)
+
+![](pics/worker-node5.png)
+
+![](pics/worker-node6.png)
+
+![](pics/worker-node7.png)
+
+![](pics/worker-node8.png)
+
+![](pics/worker-node9.png)
+
+![](pics/worker-node10.png)
+
+![](pics/worker-node11.png)
+
+![](pics/worker-node12.png)
+
+![](pics/worker-node13.png)
 
 
 
+After I create the Amazon EKS cluster, I must configure my kubeconfig file with the AWS Command Line Interface (AWS CLI). This configuration allows me to connect to my cluster using the kubectl command line.
+
+Here is the instructions link:
+[Amazon EKS cluster using the kubectl command line](https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-connection/)
 
 
-
-
-
-After you create your Amazon EKS cluster, you must configure your kubeconfig file with the AWS Command Line Interface (AWS CLI). This configuration allows you to connect to your cluster using the kubectl command line.
 
 - Verify that AWS CLI version 1.16.308 or greater is installed on your system:
 
@@ -106,6 +155,62 @@ $ kubectl get pods --kubeconfig ./.kube/config
 ```
 
 ![](pics/kubeconfig.png)
+
+
+
+### Step 2: Install LitmusChaos
+
+- Let’s install LitmusChaos on an Amazon EKS cluster using a Helm chart. The Helm chart will install the needed CRDs, service account configuration, and ChaosCenter.
+
+- Add the Litmus Helm repository using the command below:
+
+![](pics/litmuschaos-install.png)
+
+
+- This command below confirms that I have the Litmus-related Helm charts:
+
+![](pics/litmuschaos-install1.png)
+
+- Next, Let's Create a namespace to install LitmusChaos.
+
+![](pics/litmuschaos-install2.png)
+
+
+- By default, Litmus Helm chart creates NodePort services. Let’s change the backend service type to ClusterIP and front-end service type to LoadBalancer, so I can access the Litmus ChaosCenter using a load balancer.
+  - I create a file on my PC and name it override-litmus.yaml. The, edit the override-litmus.yaml file and place the below code in it. 
+
+![](pics/litmuschaos-install3.png)
+
+
+- Install the chaos via by running the below command:
+
+![](pics/litmuschaos-install4.png)
+
+
+- The following commands will verify if LitmusChaos is running:
+
+![](pics/litmuschaos-install5.png)
+
+![](pics/litmuschaos-install6.png)
+
+
+To access Litmus ChaosCenter UI, let's use the URL given here
+
+```http://ac2a5f52b687e41f09400596e6e8db67-1674008896.us-east-1.elb.amazonaws.com:9091```
+
+and sign in using the default username “admin” and password “litmus.”
+
+![](pics/litmuschaos.png)
+
+
+![](pics/litmuschaos1.png)
+
+
+
+
+
+
+
 
 
 
