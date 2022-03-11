@@ -252,5 +252,59 @@ Then edit **nginx.yaml** with the below code
 
 
 
+### Step 4: Chaos Experiments
+
+[Litmus ChaosHub](https://hub.litmuschaos.io/) is a public repository where LitmusChaos community members publish their chaos experiments such as **pod-delete,** **node-drain**, **node-cpu-hog**, etc. In this section, I will perform the **pod-autoscaler** experiment from LitmusChaos hub to test cluster auto scaling on Amazon EKS cluster.
+
+- **Experiment: Pod Autoscaler**
+
+The intent of the pod auto scaler experiment is to check the ability of nodes to accommodate the number of replicas for a deployment. 
+
+**Hypothesis**: Amazon EKS cluster should auto scale when cluster capacity is insufficient to run the pods.
+
+Chaos experiment can be launched using the Litmus ChaosCenter UI by creating a workflow.
+
+Let's navigate to Litmus Chaos Center that I previously create and select **Litmus Workflows** in the left-hand navigation and then select the **Schedule a workflow** button to create a workflow.
 
 
+![](pics/chaos-center.png)
+
+
+![](pics/chaos-center1.png)
+
+
+
+![](pics/chaos-center2.png)
+
+
+![](pics/chaos-center3.png)
+
+
+![](pics/chaos-center4.png)
+
+
+![](pics/chaos-center5.png)
+
+
+
+![](pics/chaos-center6.png)
+
+
+![](pics/chaos-center7.png)
+
+
+
+![](pics/chaos-center8.png)
+
+
+
+![](pics/chaos-center9.png)
+
+
+
+![](pics/chaos-center10.png)
+
+
+From the ChaosResults, it is clearly that the experiment failed because there was no capacity in the cluster to run 10 replicas.
+
+![](pics/chaos-center11.png)
