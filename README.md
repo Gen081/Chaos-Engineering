@@ -58,7 +58,10 @@ Since I already installed the AWS CLI version 2 on my terminal from a previous p
 
 - [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
 
-To install kubectl using native package management.  Type these commands below:
+To install kubectl using native package management. Use this link to install kubectl [Install and Set Up kubectl on Linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/) 
+and at almost the very end of the page, there will be the "native package management" section.
+
+ Type these commands below:
 
 ![](pics/kubectl-install.png)
 
@@ -308,3 +311,109 @@ Let's navigate to Litmus Chaos Center that I previously create and select **Lit
 From the ChaosResults, it is clearly that the experiment failed because there was no capacity in the cluster to run 10 replicas.
 
 ![](pics/chaos-center11.png)
+
+
+
+- **Install Cluster Autoscaler**
+
+![](pics/cluster-autoscaler.png)
+
+
+- **Create an IAM policy and role**
+
+![](pics/iam-role-policy.png)
+
+To verify if the policy was created, go to **IAM console**, on the left click on **Policies**, the policy created must appear at the top of the list:
+
+![](pics/iam-role-policy1.png)
+
+
+Create an IAM role and attach an IAM policy to it using eksctl.
+
+![](pics/iam-role-policy2.png)
+
+If **No Task** is showing at the bottom. One way to troubleshoot that, is to navigate the CloudFormation 
+
+**Note this below:**
+![](pics/iam-role-policy3-troubshout.png)
+
+
+Then run the previous comman again:
+
+![](pics/iam-role-policy4.png)
+
+
+To make sure the service account with the ARN of the IAM role is annotated. Type this command:
+
+
+![](pics/iam-role-policy5.png)
+
+
+- **Deploy the Cluster Autoscaler**
+
+Let's download the Cluster Autoscaler manifest.
+
+![](pics/deploy-cluster.png)
+
+
+Edit the downloaded file to replace <YOUR CLUSTER NAME> with the cluster name (eks-litmus-demo) and add the following two lines.
+
+```
+- --balance-similar-node-groups
+- --skip-nodes-with-system-pods=false
+```
+
+In order to edit the file, type this command:
+
+![](pics/deploy-cluster1.png)
+
+then a file will appear, navigate at the bottom, look for **command** and edit as follow:
+
+![](pics/cluster-autoscalerADDON.png)
+
+
+Apply the manifest file to the cluster.
+
+![](pics/deploy-cluster2.png)
+
+
+Then, let's patch the deployment to add the cluster-autoscaler.kubernetes.io/safe-to-evict annotation to the Cluster Autoscaler pods with the following command.
+
+![](pics/deploy-cluster3.png)
+
+
+
+To find the latest Cluster Autoscaler version that matches the Kubernetes major and minor versions of my cluster. Also, to Set the Cluster Autoscaler image tag to the version that was exported in the previous step with the following command.
+
+
+![](pics/deploy-cluster4.png)
+
+
+![](pics/deploy-cluster5.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+eksctl create iamserviceaccount \
+    --cluster=eks-litmus-demo \
+    --namespace=kube-system \
+    --name=cluster-autoscaler \
+    --attach-policy-arn="arn:aws:iam::857433934232:policy/AmazonEKSClusterAutoscalerPolicy" \
+    --override-existing-serviceaccounts \
+    --approve
+
+```
+
+
+
+arn:aws:iam::857433934232:policy/AmazonEKSClusterAutoscalerPolicy
