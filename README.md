@@ -393,27 +393,45 @@ To find the latest Cluster Autoscaler version that matches the Kubernetes major 
 
 
 
+Now the Cluster Autoscaler is deployed, let’s rerun the same experiment by navigating to Litmus Workflows, then the Schedules tab. Select the three dots menu icon for the workflow and select Rerun Schedule.
+
+![](pics/litmus-workflow.png)
+
+![](pics/litmus-workflow1.png)
 
 
+![](pics/litmus-workflow2.png)
+
+If the autoscale-chaos-workflow **failed**
 
 
+### Experiment Conclusion
+
+Autoscaling the pod triggered the ClusterAautoscaler as a result of insufficient capacity, and when a new node was added to the cluster, and the pods were successfully provisioned.
 
 
+### Next steps
+
+ The above walkthrough, I demonstrate how to get started with Chaos Engineering using LitmusChaos on Amazon EKS cluster. Nevertheless, there are additional experiments such as **pod-delete**, **node-drain**, **node-cpu-hog**, and so on that I can integrate with a CI/CD pipeline to perform Chaos Engineering. LitmusChaos also supports **gitops** and advanced chaos workflows using **Chaos Workflows**.
+
+- ### Pod-Delete
+
+When initiate Pod Delete,it contains chaos to disrupt state of kubernetes resources. Experiments can inject random pod delete failures against specified application: 
+   - Causes (forced/graceful) pod failure of random replicas of an application deployment.
+   - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod.
+
+   
+#### PRE-REQUISITE:
+- **Install Litmus Operator:** a tool for injecting Chaos Experiments
 
 
+### Installation
 
+companies looking to use Litmus for the first time have two options available to them today. One way is to use a hosted Litmus service like [ChaosNative Litmus Cloud](https://cloud.chaosnative.com/). Alternatively, they looking for some more flexibility that can install Litmus into their own Kubernetes cluster.
 
-```
-eksctl create iamserviceaccount \
-    --cluster=eks-litmus-demo \
-    --namespace=kube-system \
-    --name=cluster-autoscaler \
-    --attach-policy-arn="arn:aws:iam::857433934232:policy/AmazonEKSClusterAutoscalerPolicy" \
-    --override-existing-serviceaccounts \
-    --approve
+Those choosing the self-hosted option can refer to this Install and Configure docs for installing alternate versions and more detailed instructions.
 
-```
+- Self-Hosted
+- Hosted (Beta)
 
-
-
-arn:aws:iam::857433934232:policy/AmazonEKSClusterAutoscalerPolicy
+Installation of Self-Hosted Litmus can be done using either of the below
