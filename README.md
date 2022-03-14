@@ -427,37 +427,181 @@ When initiate Pod Delete,it contains chaos to disrupt state of kubernetes resour
 
 ### Installation
 
-companies looking to use Litmus for the first time have two options available to them today. One way is to use a hosted Litmus service like [ChaosNative Litmus Cloud](https://cloud.chaosnative.com/). Alternatively, they looking for some more flexibility that can install Litmus into their own Kubernetes cluster.
+Companies looking to use Litmus for the first time have two options available to them today. One way is to use a hosted Litmus service like [ChaosNative Litmus Cloud](https://cloud.chaosnative.com/). Alternatively, they looking for some more flexibility that can install Litmus into their own Kubernetes cluster.
 
 Those choosing the self-hosted option can refer to this Install and Configure docs for installing alternate versions and more detailed instructions.
 
 - Self-Hosted
 - Hosted (Beta)
 
+I will opt for the Self-Hosted option for this project.
+
 Installation of Self-Hosted Litmus can be done using either of the below
+**methods** :
+
+[Helm3](https://docs.litmuschaos.io/docs/getting-started/installation/#install-litmus-using-helm) chart 
+
+[Kubectl](https://docs.litmuschaos.io/docs/getting-started/installation/#install-litmus-using-kubectl) yaml spec file. 
 
 
+For this project, I will be using the
+ **helm** method
+
+
+**Install Litmus using Helm**
+
+The helm chart will install all the required service account configuration and ChaosCenter.
+
+Since I already installed **Helm** at the beginning of this project, therefore I don't need to do it again.
+
+**Note** This is the command I would use in case it wasn't install prior:
 
 ```
-http://ac2a5f52b687e41f09400596e6e8db67-1674008896.us-east-1.elb.amazonaws.com:9091
+helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
+```
+
+
+**Add the litmus helm repository**
+
+```
+helm repo list
+```
+
+Then
+
+**Setup Service Account (RBAC)**
+
+Create a service account using the following command:
+
+```
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/2.6.0?file=charts/generic/pod-delete/rbac.yaml
+```
+
+**Sample Chaos Engine**
+
+Create a file and name it **engine.yaml**
+type this command:
+
+```
+sudo nano engine.yaml
+```
+
+![](pics/Pod-D-engine-yaml.png)
+
+Once I download the yaml, I can apply the yaml using the below command:
+
+```
+kubectl apply -f engine.yaml
 ```
 
 ![](pics/Pod-delete.png)
 
-The engine.yaml file is this:
 
-![](pics/Pod-D-engine-yaml.png)
 
 
 ### Node-drain
 
+Drain the node where application pod is scheduled.
+
+#### PRE-REQUISITE:
+
+**Install Litmus Operator**: a tool for injecting Chaos Experiments
+
+
+**Install this Chaos Experiment**
+
+You can install the Chaos Experiment using the following command
+
+```
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/2.6.0?file=charts/generic/node-drain/experiment.yaml
+```
+
+Then 
+
+**Setup Service Account (RBAC)**
+
+Create a service account using the following command:
+
+```
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/2.6.0?file=charts/generic/node-drain/rbac.yaml
+```
+
+Next
+
+**Create a file and name it generic.yaml**
+type this command:
+
+```
+sudo nano generic.yaml
+```
+![](pics/node-drain-yaml.png)
+
+
+Once you download the yaml you can apply the yaml using the below command:
+
+```
+kubectl apply -f generic.yaml
+```
+
 ![](pics/node-drain.png)
 
-![](pics/node-drain-yaml.png)
+
 
 
 ### Node-cpu-hog
 
-![](pics/node-cpu-hog.png)
+Node CPU hog contains chaos to disrupt the state of Kubernetes resources. Experiments can inject a CPU spike on a node where the application pod is scheduled.
+
+
+#### PRE-REQUISITE:
+
+**Install Litmus Operator**: a tool for injecting Chaos Experiments
+
+
+**Install this Chaos Experiment**
+
+Install this Chaos Experiment using the following command: 
+
+```
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/2.6.0?file=charts/generic/node-cpu-hog/experiment.yaml
+```
+
+Then
+
+
+**Setup Service Account (RBAC)**
+
+Create a service account using the following command:
+
+```
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/2.6.0?file=charts/generic/node-cpu-hog/rbac.yaml
+```
+
+Next
+
+Create a file and name it node-cpu.yaml
+type this command:
+
+```
+sudo nano node-cpu.yaml
+```
 
 ![](pics/node-cpu-hog-yaml.png)
+
+
+Once you download the yaml you can apply the yaml using the below command
+
+```
+kubectl apply -f node-cpu.yaml
+```
+
+![](pics/node-cpu-hog.png)
+
+
+
+
+
+
+
+
+
