@@ -435,3 +435,29 @@ Those choosing the self-hosted option can refer to this Install and Configure do
 - Hosted (Beta)
 
 Installation of Self-Hosted Litmus can be done using either of the below
+
+
+
+```
+http://ac2a5f52b687e41f09400596e6e8db67-1674008896.us-east-1.elb.amazonaws.com:9091
+```
+
+![](pics/Pod-delete.png)
+
+The engine.yaml file is this:
+
+![](pics/Pod-D-engine-yaml.png)
+
+
+### Node-drain
+
+![](pics/node-drain.png)
+
+![](pics/node-drain-yaml.png)
+
+
+### Node-cpu-hog
+
+![](pics/node-cpu-hog.png)
+
+![](pics/node-cpu-hog-yaml.png)
